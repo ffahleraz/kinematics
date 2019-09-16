@@ -50,16 +50,6 @@ class Vector2D:
         self._array[1] = value
 
 
-    @property
-    def magnitude(self) -> float:
-        return np.linalg.norm(self._array)
-
-
-    @property
-    def angle(self) -> float:
-        return math.atan2(self._array[1], self._array[0])
-
-
     def __repr__(self) -> str:
         return "Vector2D(x: {}, y: {})".format(self._array[0], self._array[1])
 
@@ -110,22 +100,34 @@ class Vector2D:
         return hash((self.x, self.y))
 
 
+    @property
+    def magnitude(self) -> float:
+        return np.linalg.norm(self._array)
+
+
+    @property
+    def angle(self) -> float:
+        return math.atan2(self._array[1], self._array[0])
+
+
+    def angle_from(self, other: 'Vector2D') -> float:
+        if abs(self) == 0.0 or abs(other) == 0.0:
+            return 0.0
+        else:
+            cos = other.dot(self) / (abs(other) * abs(self))
+            return math.acos(round(cos, 4))
+
+
     def dot(self, other: 'Vector2D') -> float:
         return np.dot(self._array, other._array)
 
 
-    def rotate(self, angle: float) -> None:
+    def rotated(self, angle: float) -> 'Vector2D':
         rotation_matrix = np.array([
             [math.cos(angle), -1 * math.sin(angle)], 
             [math.sin(angle), math.cos(angle)]
         ])
-        self._array = np.dot(rotation_matrix, self._array)
-
-
-    def rotated(self, angle: float) -> 'Vector2D':
-        new_vector = Vector2D.from_copy(self)
-        new_vector.rotate(angle)
-        return new_vector
+        return Vector2D.from_array(np.dot(rotation_matrix, self._array))
 
 
     def normalized(self) -> 'Vector2D':
@@ -135,23 +137,9 @@ class Vector2D:
         else:
             return Vector2D.zeros()
 
-
-    def project_to(self, other: 'Vector2D') -> None:
-        if abs(other) == 0.0:
-            self._array = Vector2D.zeros()._array
-        else:
-            self._array = (other.normalized() * self.dot(other) / abs(other))._array
-
     
     def projected_to(self, other: 'Vector2D') -> 'Vector2D':
-        new_vector = Vector2D.from_copy(self)
-        new_vector.project_to(other)
-        return new_vector
-
-
-    def angle_from(self, other: 'Vector2D') -> float:
-        if abs(self) == 0.0 or abs(other) == 0.0:
-            return 0.0
+        if abs(other) == 0.0:
+            return Vector2D.zeros()
         else:
-            cos = other.dot(self) / (abs(other) * abs(self))
-            return math.acos(round(cos, 4))
+            return other.normalized() * self.dot(other) / abs(other)
