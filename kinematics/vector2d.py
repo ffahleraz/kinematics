@@ -56,15 +56,6 @@ class Vector2D:
 
 
     @property
-    def unit(self) -> 'Vector2D':
-        magnitude = self.magnitude
-        if magnitude != 0.0:
-            return self / magnitude
-        else:
-            return Vector2D.zero()
-
-
-    @property
     def angle(self) -> float:
         return math.atan2(self._array[1], self._array[0])
 
@@ -139,23 +130,21 @@ class Vector2D:
         new_vector = Vector2D.from_copy(self)
         new_vector.rotate(angle)
         return new_vector
-    
-
-    def normalize(self, scale: float) -> None:
-        self._array = self.unit._array * scale
 
 
-    def normalized(self, scale: float) -> 'Vector2D':
-        new_vector = Vector2D.from_copy(self)
-        new_vector.normalize(scale)
-        return new_vector
+    def normalized(self) -> 'Vector2D':
+        magnitude = self.magnitude
+        if magnitude != 0.0:
+            return self / magnitude
+        else:
+            return Vector2D.zero()
 
 
     def project_to(self, other: 'Vector2D') -> None:
-        if abs(other) == 0:
+        if abs(other) == 0.0:
             self._array = Vector2D.zero()._array
         else:
-            self._array = other.normalized(self.dot(other) / abs(other))._array
+            self._array = (other.normalized() * self.dot(other) / abs(other))._array
 
     
     def projected_to(self, other: 'Vector2D') -> 'Vector2D':
