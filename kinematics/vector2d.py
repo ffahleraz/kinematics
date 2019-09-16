@@ -170,12 +170,3 @@ class Vector2D:
         else:
             cos = other.dot(self) / (abs(other) * abs(self))
             return math.acos(round(cos, 4))
-
-
-    def _raise_unsupported_operand(self,
-                                  operator: str,
-                                  lhs: Any,
-                                  rhs: Any) -> None:
-        raise TypeError(
-                "unsupported operand type(s) for {}: '{}' and '{}'".format(
-                operator, type(lhs), type(rhs)))
