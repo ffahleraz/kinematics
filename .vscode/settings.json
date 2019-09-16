@@ -1,6 +1,11 @@
 {
+    "python.pythonPath": "/anaconda/envs/dagozilla/bin/python",
+    "python.linting.lintOnSave": true,
+    "python.linting.enabled": true,
     "python.linting.pylintEnabled": false,
     "python.linting.mypyEnabled": true,
-    "python.linting.enabled": true,
-    "python.pythonPath": "/anaconda/envs/dagozilla/bin/python"
+    "python.linting.mypyPath": "/anaconda/envs/dagozilla/bin/mypy",
+    "editor.formatOnSave": true,
+    "python.formatting.provider": "black",
+    "python.formatting.blackPath": "/anaconda/envs/dagozilla/bin/black"
 }
