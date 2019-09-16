@@ -26,7 +26,7 @@ class Vector2D:
 
 
     @classmethod
-    def zero(cls) -> 'Vector2D':
+    def zeros(cls) -> 'Vector2D':
         return cls(0.0, 0.0)
 
 
@@ -137,12 +137,12 @@ class Vector2D:
         if magnitude != 0.0:
             return self / magnitude
         else:
-            return Vector2D.zero()
+            return Vector2D.zeros()
 
 
     def project_to(self, other: 'Vector2D') -> None:
         if abs(other) == 0.0:
-            self._array = Vector2D.zero()._array
+            self._array = Vector2D.zeros()._array
         else:
             self._array = (other.normalized() * self.dot(other) / abs(other))._array
 
