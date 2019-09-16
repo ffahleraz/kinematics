@@ -106,10 +106,6 @@ class Vector2D:
         return self.magnitude
 
 
-    def __lt__(self, other: Any) -> bool:
-        return abs(self) < abs(other)
-
-
     def __hash__(self):
         return hash((self.x, self.y))
 
