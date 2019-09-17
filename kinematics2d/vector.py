@@ -1,5 +1,7 @@
 #!/usr/bin/env python3
 
+"""Definition of a 2-dimensional vector."""
+
 import math
 
 import numpy as np
@@ -8,9 +10,7 @@ __all__ = ["Vector"]
 
 
 class Vector:
-    """
-        A class that represents a 2-dimensional vector.
-    """
+    """A class representing a 2-dimensional vector."""
 
     def __init__(self, x: float, y: float) -> None:
         self._array = np.array([x, y], dtype="Float64")
