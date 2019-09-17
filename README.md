@@ -1,3 +1,3 @@
-# Kinematics
+# Kinematics2D
 
-A basic 2D kinematics library for robotics in Python 3.
+A basic 2-dimensional point-kinematics library for Python 3.
