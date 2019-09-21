@@ -1,6 +1,4 @@
-#!/usr/bin/env python3
-
-"""Reusable utility functions."""
+"""Utility functions."""
 
 import numpy as np
 
