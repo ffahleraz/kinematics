@@ -1,8 +1,6 @@
 import math
 from typing import Optional
 
-import numpy as np
-
 import kinematics2d as km
 
 __all__ = ["Pose"]
@@ -17,7 +15,7 @@ class Pose:
     """
 
     def __init__(self, position: km.Vector, orientation: float) -> None:
-        self._position: km.Vector = position
+        self._position: km.Vector = km.Vector.from_copy(position)
         self._orientation: float = orientation
 
     @classmethod
@@ -45,31 +43,31 @@ class Pose:
         self._orientation = value
 
     def __repr__(self) -> str:
-        return "Pose(pos: {}, ort: {})".format(self._position, self._orientation)
+        return "Pose(pos: {}, ort: {})".format(self.position, self.orientation)
 
     def __add__(self, other: "Pose") -> "Pose":
         """Calculate the transformation of other to the coordinate frame of self."""
         return Pose(
-            self._position + other.position.rotated(self._orientation),
-            self._orientation + other.orientation,
+            self.position + other.position.rotated(self.orientation),
+            self.orientation + other.orientation,
         )
 
     def __sub__(self, other: "Pose") -> "Pose":
         """Calculate the transformation of self to the coordinate frame of other."""
         return Pose(
-            (self._position - other.position).rotated(-other.orientation),
-            self._orientation - other.orientation,
+            (self.position - other.position).rotated(-other.orientation),
+            self.orientation - other.orientation,
         )
 
     def is_at_position(
         self, target: km.Vector, tolerance: Optional[float] = 0.0
     ) -> bool:
-        return math.abs(target - self._position) <= tolerance
+        return math.abs(target - self.position) <= tolerance
 
     def is_at_orientation(
         self, target: float, tolerance: Optional[float] = 0.0
     ) -> bool:
-        return math.abs(km.angle_diff(self._orientation, target)) <= tolerance
+        return math.abs(km.angle_diff(self.orientation, target)) <= tolerance
 
     def is_at(
         self,
