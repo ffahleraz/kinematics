@@ -1,5 +1,3 @@
-"""Definition of a 2-dimensional vector."""
-
 import math
 
 import numpy as np
@@ -8,10 +6,15 @@ __all__ = ["Vector"]
 
 
 class Vector:
-    """A 2-dimensional vector."""
+    """A 2-dimensional vector.
+
+    Attributes:
+        - x: float
+        - y: float
+    """
 
     def __init__(self, x: float, y: float) -> None:
-        self._array = np.array([x, y], dtype="Float64")
+        self._array: np.ndarray = np.array([x, y], dtype="Float64")
 
     @classmethod
     def from_array(cls, array: np.ndarray) -> "Vector":

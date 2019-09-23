@@ -1,5 +1,3 @@
-"""Utility functions."""
-
 import numpy as np
 
 __all__ = ["pi", "rad_from_deg", "deg_from_rad"]
@@ -14,3 +12,12 @@ def rad_from_deg(value: float) -> float:
 
 def deg_from_rad(value: float) -> float:
     return np.rad2deg(value)
+
+
+def angle_cap(value: float) -> float:
+    capped_value = value % (2.0 * pi)
+    return capped_value if capped_value <= pi else capped_value - 2.0 * pi
+
+
+def angle_diff(origin: float, taget: float) -> float:
+    return angle_cap(angle_cap(origin) - angle_cap(taget))
