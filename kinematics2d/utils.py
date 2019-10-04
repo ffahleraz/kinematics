@@ -1,6 +1,6 @@
 import numpy as np
 
-__all__ = ["pi", "rad_from_deg", "deg_from_rad"]
+__all__ = ["pi", "rad_from_deg", "deg_from_rad", "angle_cap", "angle_diff"]
 
 
 pi = np.pi

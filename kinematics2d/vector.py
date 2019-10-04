@@ -14,7 +14,7 @@ class Vector:
     """
 
     def __init__(self, x: float, y: float) -> None:
-        self._array: np.ndarray = np.array([x, y], dtype="Float64")
+        self._array: np.ndarray = np.array([x, y]).astype(float)
 
     @classmethod
     def from_array(cls, array: np.ndarray) -> "Vector":

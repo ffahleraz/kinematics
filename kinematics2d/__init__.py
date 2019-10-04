@@ -1,10 +1,13 @@
 from . import vector
-from . import pose
-from . import kinematics
-from . import utils
 from .vector import *
+
+from . import pose
 from .pose import *
+
+from . import kinematics
 from .kinematics import *
+
+from . import utils
 from .utils import *
 
 __all__ = ["vector", "pose", "kinematics", "utils"]
