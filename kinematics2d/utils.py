@@ -18,6 +18,7 @@ EPSILON = 1e-9
 
 
 def is_close(a: float, b: float, epsilon: typing.Optional[float] = None) -> bool:
+    """Check if the difference between two floats is less than or equal to epsilon."""
     if epsilon is None:
         epsilon = EPSILON
     return abs(a - b) <= epsilon
@@ -32,11 +33,11 @@ def deg_from_rad(value: float) -> float:
 
 
 def angle_cap(value: float) -> float:
-    """Convert an angle to be between -PI and PI."""
+    """Convert an angle (in radian) to be between -PI and PI."""
     capped_value = value % (2.0 * PI)
     return capped_value if capped_value <= PI else capped_value - 2.0 * PI
 
 
 def angle_diff(origin: float, taget: float) -> float:
-    """Calculate the smallest difference between origin from target."""
+    """Calculate the smallest difference (in radian) between origin from target."""
     return angle_cap(angle_cap(origin) - angle_cap(taget))

@@ -14,7 +14,7 @@ class TestVector:
     def test_init_from_copy(self) -> None:
         v1 = k2d.Vector(24, 42)
         v2 = k2d.Vector.from_copy(v1)
-        assert v2.x == v1.x and v2.y == v1.y
+        assert v2.x == 24 and v2.y == 42
 
     def test_init_zeros(self) -> None:
         v = k2d.Vector.zeros()
@@ -24,11 +24,17 @@ class TestVector:
         v = k2d.Vector.from_ndarray(np.array([24, 42]))
         assert v.x == 24 and v.y == 42
 
+    def test_getters(self) -> None:
+        v = k2d.Vector(24, 42)
+        assert v.x == 24
+        assert v.y == 42
+
     def test_setters(self) -> None:
         v = k2d.Vector(24, 42)
         v.x = 12
         v.y = 21
-        assert v.x == 12 and v.y == 21
+        assert v.x == 12
+        assert v.y == 21
 
     def test_repr(self) -> None:
         v = k2d.Vector(24.42, 42.24)
@@ -82,11 +88,18 @@ class TestVector:
 
     def test_is_close_to(self) -> None:
         v1 = k2d.Vector(1.0, 1.0)
-        v2 = k2d.Vector(1.0 + k2d.EPSILON / 2, 1.0 + k2d.EPSILON / 2)
+
+        v2 = k2d.Vector(1.0 + k2d.EPSILON / 2, 1.0 - k2d.EPSILON / 2)
         assert v1.is_close_to(v2)
 
-        v3 = k2d.Vector(1.0 + k2d.EPSILON * 2, 1.0 + k2d.EPSILON * 2)
-        assert not v1.is_close_to(v3)
+        v3 = k2d.Vector(1.09, 0.91)
+        assert v1.is_close_to(v3, epsilon=0.1)
+
+        v4 = k2d.Vector(1.0 + k2d.EPSILON * 2, 1.0 - k2d.EPSILON * 2)
+        assert not v1.is_close_to(v4)
+
+        v5 = k2d.Vector(1.2, 0.8)
+        assert not v1.is_close_to(v5, epsilon=0.1)
 
     def test_magnitude(self) -> None:
         v = k2d.Vector(3.33, 4.44)

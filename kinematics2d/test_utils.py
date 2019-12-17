@@ -1,5 +1,3 @@
-import numpy as np
-
 import kinematics2d as k2d
 
 
