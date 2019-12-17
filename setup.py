@@ -8,6 +8,7 @@ setuptools.setup(
     author="Faza Fahleraz",
     author_email="ffahleraz@gmail.com",
     license="MIT",
+    package_data={"kinematics2d": ["py.typed"]},
     packages=setuptools.find_packages(),
     python_requires=">=3.6",
     install_requires=["numpy"],
