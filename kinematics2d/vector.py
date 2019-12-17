@@ -1,6 +1,9 @@
 import math
+import typing
 
 import numpy as np
+
+import kinematics2d as km
 
 __all__ = ["Vector"]
 
@@ -17,16 +20,16 @@ class Vector:
         self._array: np.ndarray = np.array([x, y]).astype(float)
 
     @classmethod
-    def from_array(cls, array: np.ndarray) -> "Vector":
-        return cls(array[0], array[1])
-
-    @classmethod
     def from_copy(cls, source: "Vector") -> "Vector":
-        return cls.from_array(source._array)
+        return cls.from_ndarray(source._array)
 
     @classmethod
     def zeros(cls) -> "Vector":
         return cls(0.0, 0.0)
+
+    @classmethod
+    def from_ndarray(cls, array: np.ndarray) -> "Vector":
+        return cls(array[0], array[1])
 
     @property
     def x(self) -> float:
@@ -48,22 +51,22 @@ class Vector:
         return "Vector(x: {}, y: {})".format(self._array[0], self._array[1])
 
     def __add__(self, other: "Vector") -> "Vector":
-        return Vector.from_array(self._array + other._array)
+        return Vector.from_ndarray(self._array + other._array)
 
     def __radd__(self, other: "Vector") -> "Vector":
         return self + other
 
     def __sub__(self, other: "Vector") -> "Vector":
-        return Vector.from_array(self._array - other._array)
+        return Vector.from_ndarray(self._array - other._array)
 
     def __rsub__(self, other: "Vector") -> "Vector":
-        return Vector.from_array(other._array - self._array)
+        return Vector.from_ndarray(other._array - self._array)
 
     def __mul__(self, other: float) -> "Vector":
-        return Vector.from_array(self._array * other)
+        return Vector.from_ndarray(self._array * other)
 
     def __truediv__(self, other: float) -> "Vector":
-        return Vector.from_array(self._array / other)
+        return Vector.from_ndarray(self._array / other)
 
     def __eq__(self, other: "Vector") -> bool:  # type: ignore
         return self._array[0] == other._array[0] and self._array[1] == other._array[1]
@@ -72,13 +75,20 @@ class Vector:
         return self._array[0] != other._array[0] or self._array[1] != other._array[1]
 
     def __neg__(self) -> "Vector":
-        return Vector.from_array(-self._array)
+        return Vector.from_ndarray(-self._array)
 
     def __abs__(self) -> float:
         return self.magnitude
 
     def __hash__(self):
         return hash((self.x, self.y))
+
+    def is_close_to(
+        self, other: "Vector", epsilon: typing.Optional[float] = None
+    ) -> bool:
+        return km.is_close(self.x, other.x, epsilon) and km.is_close(
+            self.y, other.y, epsilon
+        )
 
     @property
     def magnitude(self) -> float:
@@ -105,7 +115,7 @@ class Vector:
                 [math.sin(angle), math.cos(angle)],
             ]
         )
-        return Vector.from_array(np.dot(rotation_matrix, self._array))
+        return Vector.from_ndarray(np.dot(rotation_matrix, self._array))
 
     def normalized(self) -> "Vector":
         magnitude = self.magnitude

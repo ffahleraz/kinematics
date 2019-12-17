@@ -1,9 +1,26 @@
+import typing
+
 import numpy as np
 
-__all__ = ["pi", "rad_from_deg", "deg_from_rad", "angle_cap", "angle_diff"]
+__all__ = [
+    "PI",
+    "EPSILON",
+    "is_close",
+    "rad_from_deg",
+    "deg_from_rad",
+    "angle_cap",
+    "angle_diff",
+]
 
 
-pi = np.pi
+PI = np.pi
+EPSILON = 1e-9
+
+
+def is_close(a: float, b: float, epsilon: typing.Optional[float] = None) -> bool:
+    if epsilon is None:
+        epsilon = EPSILON
+    return abs(a - b) <= epsilon
 
 
 def rad_from_deg(value: float) -> float:
@@ -15,8 +32,8 @@ def deg_from_rad(value: float) -> float:
 
 
 def angle_cap(value: float) -> float:
-    capped_value = value % (2.0 * pi)
-    return capped_value if capped_value <= pi else capped_value - 2.0 * pi
+    capped_value = value % (2.0 * PI)
+    return capped_value if capped_value <= PI else capped_value - 2.0 * PI
 
 
 def angle_diff(origin: float, taget: float) -> float:

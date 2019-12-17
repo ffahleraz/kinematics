@@ -1,5 +1,5 @@
 import math
-from typing import Optional
+import typing
 
 import kinematics2d as km
 
@@ -60,20 +60,24 @@ class Pose:
         )
 
     def is_at_position(
-        self, target: km.Vector, tolerance: Optional[float] = 0.0
+        self, target: km.Vector, tolerance: typing.Optional[float] = None
     ) -> bool:
-        return math.abs(target - self.position) <= tolerance
+        if tolerance is None:
+            tolerance = km.EPSILON
+        return abs(target - self.position) <= tolerance
 
     def is_at_orientation(
-        self, target: float, tolerance: Optional[float] = 0.0
+        self, target: float, tolerance: typing.Optional[float] = None
     ) -> bool:
-        return math.abs(km.angle_diff(self.orientation, target)) <= tolerance
+        if tolerance is None:
+            tolerance = km.EPSILON
+        return abs(km.angle_diff(self.orientation, target)) <= tolerance
 
     def is_at(
         self,
         target: "Pose",
-        pos_tolerance: Optional[float] = 0.0,
-        ort_tolerance: Optional[float] = 0.0,
+        pos_tolerance: typing.Optional[float] = None,
+        ort_tolerance: typing.Optional[float] = None,
     ) -> bool:
         return self.is_at_position(
             target.position, pos_tolerance

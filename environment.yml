@@ -5,5 +5,7 @@ dependencies:
   - python=3.6.8
   - mypy
   - black
+  - pytest
+  - numpy
 prefix: /Users/ffahleraz/opt/anaconda3/envs/kinematics2d
 
