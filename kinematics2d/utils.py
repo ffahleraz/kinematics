@@ -32,9 +32,11 @@ def deg_from_rad(value: float) -> float:
 
 
 def angle_cap(value: float) -> float:
+    """Convert an angle to be between -PI and PI."""
     capped_value = value % (2.0 * PI)
     return capped_value if capped_value <= PI else capped_value - 2.0 * PI
 
 
 def angle_diff(origin: float, taget: float) -> float:
+    """Calculate the smallest difference between origin from target."""
     return angle_cap(angle_cap(origin) - angle_cap(taget))

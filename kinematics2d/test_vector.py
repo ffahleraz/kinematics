@@ -82,11 +82,11 @@ class TestVector:
 
     def test_is_close_to(self) -> None:
         v1 = k2d.Vector(1.0, 1.0)
-        v2 = k2d.Vector(1.00001, 1.00001)
-        assert not v1.is_close_to(v2)
+        v2 = k2d.Vector(1.0 + k2d.EPSILON / 2, 1.0 + k2d.EPSILON / 2)
+        assert v1.is_close_to(v2)
 
-        v3 = k2d.Vector(1.0000000001, 1.0000000001)
-        assert v1.is_close_to(v3)
+        v3 = k2d.Vector(1.0 + k2d.EPSILON * 2, 1.0 + k2d.EPSILON * 2)
+        assert not v1.is_close_to(v3)
 
     def test_magnitude(self) -> None:
         v = k2d.Vector(3.33, 4.44)
