@@ -1,7 +1,7 @@
 import math
 from typing import Optional
 
-import kinematics2d as km
+import kinematics2d as k2d
 
 __all__ = ["Kinematics"]
 
@@ -10,53 +10,53 @@ class Kinematics:
     """A 2-dimensional kinematics.
 
     Attributes:
-        - position: km.Vector
+        - position: k2d.Vector
         - orientation: float (in radians)
-        - velocity: km.Vector
+        - velocity: k2d.Vector
         - rotation: float (in radians)
     """
 
     def __init__(
         self,
-        position: km.Vector,
+        position: k2d.Vector,
         orientation: float,
-        velocity: km.Vector,
+        velocity: k2d.Vector,
         rotation: float,
     ) -> None:
-        self._position: km.Vector = km.Vector.from_copy(position)
+        self._position: k2d.Vector = k2d.Vector.from_copy(position)
         self._orientation: float = orientation
-        self._velocity: km.Vector = km.Vector.from_copy(velocity)
+        self._velocity: k2d.Vector = k2d.Vector.from_copy(velocity)
         self._rotation: float = rotation
 
     @classmethod
     def from_pose(
-        cls, pose: km.Pose, velocity: km.Vector, rotation: float
+        cls, pose: k2d.Pose, velocity: k2d.Vector, rotation: float
     ) -> "Kinematics":
         return cls(pose.position, pose.orientation, velocity, rotation)
 
     @classmethod
     def from_copy(cls, source: "Kinematics") -> "Kinematics":
         return cls(
-            km.Vector.from_copy(source.position),
+            k2d.Vector.from_copy(source.position),
             source.orientation,
-            km.Vector.from_copy(source.velocity),
+            k2d.Vector.from_copy(source.velocity),
             source.rotation,
         )
 
     @classmethod
     def zeros(cls) -> "Kinematics":
-        return cls.from_pose(km.Pose.zeros(), km.Vector.zeros(), 0.0)
+        return cls.from_pose(k2d.Pose.zeros(), k2d.Vector.zeros(), 0.0)
 
     @property
-    def pose(self) -> km.Pose:
-        return km.Pose(self._position, self._orientation)
+    def pose(self) -> k2d.Pose:
+        return k2d.Pose(self._position, self._orientation)
 
     @property
-    def position(self) -> km.Vector:
+    def position(self) -> k2d.Vector:
         return self._position
 
     @position.setter
-    def position(self, value: km.Vector) -> None:
+    def position(self, value: k2d.Vector) -> None:
         self._position = value
 
     @property
@@ -68,11 +68,11 @@ class Kinematics:
         self._orientation = value
 
     @property
-    def velocity(self) -> km.Vector:
+    def velocity(self) -> k2d.Vector:
         return self._velocity
 
     @velocity.setter
-    def velocity(self, value: km.Vector) -> None:
+    def velocity(self, value: k2d.Vector) -> None:
         self._velocity = value
 
     @property
@@ -113,7 +113,7 @@ class Kinematics:
         new_position = self.position + delta_position.rotated(delta_orientation)
         return Kinematics(new_position, new_orientation, self.velocity, self.rotation)
 
-    def delta_position_to_stop(self, max_linear_decel_magnitude: float) -> km.Vector:
+    def delta_position_to_stop(self, max_linear_decel_magnitude: float) -> k2d.Vector:
         return (
             self.velocity.normalized()
             * (abs(self.velocity) ** 2)

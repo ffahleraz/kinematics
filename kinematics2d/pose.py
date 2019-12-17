@@ -1,7 +1,7 @@
 import math
 import typing
 
-import kinematics2d as km
+import kinematics2d as k2d
 
 __all__ = ["Pose"]
 
@@ -10,28 +10,28 @@ class Pose:
     """A 2-dimensional pose.
 
     Attributes:
-        - position: km.Vector
+        - position: k2d.Vector
         - orientation: float (in radians)
     """
 
-    def __init__(self, position: km.Vector, orientation: float) -> None:
-        self._position: km.Vector = km.Vector.from_copy(position)
+    def __init__(self, position: k2d.Vector, orientation: float) -> None:
+        self._position: k2d.Vector = k2d.Vector.from_copy(position)
         self._orientation: float = orientation
 
     @classmethod
     def from_copy(cls, source: "Pose") -> "Pose":
-        return cls(km.Vector.from_copy(source.position), source.orientation)
+        return cls(k2d.Vector.from_copy(source.position), source.orientation)
 
     @classmethod
     def zeros(cls) -> "Pose":
-        return cls(km.Vector.zeros(), 0.0)
+        return cls(k2d.Vector.zeros(), 0.0)
 
     @property
-    def position(self) -> km.Vector:
+    def position(self) -> k2d.Vector:
         return self._position
 
     @position.setter
-    def position(self, value: km.Vector) -> None:
+    def position(self, value: k2d.Vector) -> None:
         self._position = value
 
     @property
@@ -60,18 +60,18 @@ class Pose:
         )
 
     def is_at_position(
-        self, target: km.Vector, tolerance: typing.Optional[float] = None
+        self, target: k2d.Vector, tolerance: typing.Optional[float] = None
     ) -> bool:
         if tolerance is None:
-            tolerance = km.EPSILON
+            tolerance = k2d.EPSILON
         return abs(target - self.position) <= tolerance
 
     def is_at_orientation(
         self, target: float, tolerance: typing.Optional[float] = None
     ) -> bool:
         if tolerance is None:
-            tolerance = km.EPSILON
-        return abs(km.angle_diff(self.orientation, target)) <= tolerance
+            tolerance = k2d.EPSILON
+        return abs(k2d.angle_diff(self.orientation, target)) <= tolerance
 
     def is_at(
         self,

@@ -3,7 +3,7 @@ import typing
 
 import numpy as np
 
-import kinematics2d as km
+import kinematics2d as k2d
 
 __all__ = ["Vector"]
 
@@ -86,7 +86,7 @@ class Vector:
     def is_close_to(
         self, other: "Vector", epsilon: typing.Optional[float] = None
     ) -> bool:
-        return km.is_close(self.x, other.x, epsilon) and km.is_close(
+        return k2d.is_close(self.x, other.x, epsilon) and k2d.is_close(
             self.y, other.y, epsilon
         )
 
