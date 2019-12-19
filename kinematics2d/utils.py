@@ -38,6 +38,6 @@ def angle_cap(value: float) -> float:
     return capped_value if capped_value <= PI else capped_value - 2.0 * PI
 
 
-def angle_diff(origin: float, taget: float) -> float:
+def angle_diff(origin: float, target: float) -> float:
     """Calculate the smallest difference (in radian) between origin from target."""
-    return angle_cap(angle_cap(origin) - angle_cap(taget))
+    return angle_cap(angle_cap(origin) - angle_cap(target))
