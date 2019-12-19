@@ -2,6 +2,11 @@ import kinematics2d as k2d
 
 
 class TestUtils:
+    def test_sign(self) -> None:
+        assert k2d.sign(0.0) == 0.0
+        assert k2d.sign(11.0) == 1.0
+        assert k2d.sign(-11.0) == -1.0
+
     def test_is_close(self) -> None:
         assert k2d.is_close(1.0, 1.0 + k2d.EPSILON / 2)
         assert not k2d.is_close(1.0, 1.0 + k2d.EPSILON * 2)

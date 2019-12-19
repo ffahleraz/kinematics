@@ -5,6 +5,7 @@ import numpy as np
 __all__ = [
     "PI",
     "EPSILON",
+    "sign",
     "is_close",
     "rad_from_deg",
     "deg_from_rad",
@@ -15,6 +16,10 @@ __all__ = [
 
 PI = np.pi
 EPSILON = 1e-9
+
+
+def sign(x: float) -> float:
+    return np.sign(x)
 
 
 def is_close(a: float, b: float, epsilon: typing.Optional[float] = None) -> bool:
