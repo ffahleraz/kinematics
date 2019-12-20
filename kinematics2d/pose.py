@@ -32,7 +32,8 @@ class Pose:
 
     @position.setter
     def position(self, value: k2d.Vector) -> None:
-        self._position = value
+        self._position.x = value.x
+        self._position.y = value.y
 
     @property
     def orientation(self) -> float:

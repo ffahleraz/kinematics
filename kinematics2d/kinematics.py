@@ -51,13 +51,20 @@ class Kinematics:
     def pose(self) -> k2d.Pose:
         return k2d.Pose(self._position, self._orientation)
 
+    @pose.setter
+    def pose(self, value: k2d.Pose) -> None:
+        self._position.x = value.position.x
+        self._position.y = value.position.y
+        self._orientation = value.orientation
+
     @property
     def position(self) -> k2d.Vector:
         return self._position
 
     @position.setter
     def position(self, value: k2d.Vector) -> None:
-        self._position = value
+        self._position.x = value.x
+        self._position.y = value.y
 
     @property
     def orientation(self) -> float:
@@ -73,7 +80,8 @@ class Kinematics:
 
     @velocity.setter
     def velocity(self, value: k2d.Vector) -> None:
-        self._velocity = value
+        self._velocity.x = value.x
+        self._velocity.y = value.y
 
     @property
     def rotation(self) -> float:
