@@ -53,12 +53,18 @@ class Pose:
             self.orientation + other.orientation,
         )
 
+    def __iadd__(self, other: "Pose") -> "Pose":
+        return self + other
+
     def __sub__(self, other: "Pose") -> "Pose":
         """Calculate the transformation of self to the coordinate frame of other."""
         return Pose(
             (self.position - other.position).rotated(-other.orientation),
             self.orientation - other.orientation,
         )
+
+    def __isub__(self, other: "Pose") -> "Pose":
+        return self - other
 
     def is_at_position(
         self, target: k2d.Vector, tolerance: typing.Optional[float] = None

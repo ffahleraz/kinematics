@@ -45,12 +45,20 @@ class TestPose:
     def test_add(self) -> None:
         p1 = k2d.Pose(k2d.Vector(2.2, 3.3), k2d.PI / 2)
         p2 = k2d.Pose(k2d.Vector(3.3, 2.2), k2d.PI)
-        p3 = k2d.Pose(k2d.Vector(0.0, 5.5), k2d.PI * 3 / 2)
+        p3 = k2d.Pose(k2d.Vector(0.0, 6.6), k2d.PI * 3 / 2)
+        assert (p1 + p2).is_at(p3)
+
+        p1 += p2
+        assert (p1).is_at(p3)
 
     def test_sub(self) -> None:
         p1 = k2d.Pose(k2d.Vector(2.2, 3.3), k2d.PI)
         p2 = k2d.Pose(k2d.Vector(2.2, 3.3), k2d.PI)
         p3 = k2d.Pose(k2d.Vector(0.0, 0.0), 0.0)
+        assert (p1 - p2).is_at(p3)
+
+        p1 -= p2
+        assert (p1).is_at(p3)
 
     def test_is_at_position(self) -> None:
         p = k2d.Pose(k2d.Vector(2.2, 3.3), 1.1)

@@ -47,21 +47,33 @@ class TestVector:
         v3 = k2d.Vector(3.3, 3.3)
         assert (v1 + v2).is_close_to(v3)
 
+        v1 += v2
+        assert v1.is_close_to(v3)
+
     def test_sub(self) -> None:
         v1 = k2d.Vector(2.2, 1.1)
         v2 = k2d.Vector(1.1, 2.2)
         v3 = k2d.Vector(1.1, -1.1)
         assert (v1 - v2).is_close_to(v3)
 
+        v1 -= v2
+        assert v1.is_close_to(v3)
+
     def test_mul(self) -> None:
         v1 = k2d.Vector(8, 14)
         v2 = k2d.Vector(24, 42)
         assert (v1 * 3).is_close_to(v2)
 
+        v1 *= 3
+        assert v1.is_close_to(v2)
+
     def test_truediv(self) -> None:
         v1 = k2d.Vector(24, 42)
         v2 = k2d.Vector(8, 14)
         assert (v1 / 3).is_close_to(v2)
+
+        v1 /= 3
+        assert v1.is_close_to(v2)
 
     def test_eq(self) -> None:
         v1 = k2d.Vector(24.24, 42.42)

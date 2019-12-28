@@ -10,6 +10,8 @@ class TestUtils:
     def test_is_close(self) -> None:
         assert k2d.is_close(1.0, 1.0 + k2d.EPSILON / 2)
         assert not k2d.is_close(1.0, 1.0 + k2d.EPSILON * 2)
+        assert k2d.is_close(1.0, 1.1, 0.2)
+        assert not k2d.is_close(1.0, 1.3, 0.2)
 
     def test_rad_from_deg(self) -> None:
         assert k2d.is_close(k2d.rad_from_deg(180), k2d.PI)

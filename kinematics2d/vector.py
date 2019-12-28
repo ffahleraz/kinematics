@@ -17,11 +17,11 @@ class Vector:
     """
 
     def __init__(self, x: float, y: float) -> None:
-        self._array: np.ndarray = np.array([x, y]).astype(float)
+        self._ndarray: np.ndarray = np.array([x, y]).astype(float)
 
     @classmethod
     def from_copy(cls, source: "Vector") -> "Vector":
-        return cls.from_ndarray(source._array)
+        return cls.from_ndarray(source._ndarray)
 
     @classmethod
     def zeros(cls) -> "Vector":
@@ -33,49 +33,71 @@ class Vector:
 
     @property
     def x(self) -> float:
-        return self._array[0]
+        return self._ndarray[0]
 
     @x.setter
     def x(self, value: float) -> None:
-        self._array[0] = value
+        self._ndarray[0] = value
 
     @property
     def y(self) -> float:
-        return self._array[1]
+        return self._ndarray[1]
 
     @y.setter
     def y(self, value: float) -> None:
-        self._array[1] = value
+        self._ndarray[1] = value
 
     def __repr__(self) -> str:
-        return "Vector(x: {}, y: {})".format(self._array[0], self._array[1])
+        return "Vector(x: {}, y: {})".format(self._ndarray[0], self._ndarray[1])
 
     def __add__(self, other: "Vector") -> "Vector":
-        return Vector.from_ndarray(self._array + other._array)
+        return Vector.from_ndarray(self._ndarray + other._ndarray)
 
     def __radd__(self, other: "Vector") -> "Vector":
+        return other + self
+
+    def __iadd__(self, other: "Vector") -> "Vector":
         return self + other
 
     def __sub__(self, other: "Vector") -> "Vector":
-        return Vector.from_ndarray(self._array - other._array)
+        return Vector.from_ndarray(self._ndarray - other._ndarray)
 
     def __rsub__(self, other: "Vector") -> "Vector":
-        return Vector.from_ndarray(other._array - self._array)
+        return other - self
+
+    def __isub__(self, other: "Vector") -> "Vector":
+        return self - other
 
     def __mul__(self, other: float) -> "Vector":
-        return Vector.from_ndarray(self._array * other)
+        return Vector.from_ndarray(self._ndarray * other)
+
+    def __imul__(self, other: float) -> "Vector":
+        return self * other
 
     def __truediv__(self, other: float) -> "Vector":
-        return Vector.from_ndarray(self._array / other)
+        return Vector.from_ndarray(self._ndarray / other)
 
-    def __eq__(self, other: "Vector") -> bool:  # type: ignore
-        return self._array[0] == other._array[0] and self._array[1] == other._array[1]
+    def __itruediv__(self, other: float) -> "Vector":
+        return self / other
 
-    def __ne__(self, other: "Vector") -> bool:  # type: ignore
-        return self._array[0] != other._array[0] or self._array[1] != other._array[1]
+    def __eq__(self, other: object) -> bool:
+        if not isinstance(other, Vector):
+            return NotImplemented
+        return (
+            self._ndarray[0] == other._ndarray[0]
+            and self._ndarray[1] == other._ndarray[1]
+        )
+
+    def __ne__(self, other: object) -> bool:
+        if not isinstance(other, Vector):
+            return NotImplemented
+        return (
+            self._ndarray[0] != other._ndarray[0]
+            or self._ndarray[1] != other._ndarray[1]
+        )
 
     def __neg__(self) -> "Vector":
-        return Vector.from_ndarray(-self._array)
+        return Vector.from_ndarray(-self._ndarray)
 
     def __abs__(self) -> float:
         return self.magnitude
@@ -92,11 +114,11 @@ class Vector:
 
     @property
     def magnitude(self) -> float:
-        return np.linalg.norm(self._array)
+        return np.linalg.norm(self._ndarray)
 
     @property
     def angle(self) -> float:
-        return math.atan2(self._array[1], self._array[0])
+        return math.atan2(self._ndarray[1], self._ndarray[0])
 
     def angle_from(self, other: "Vector") -> float:
         if abs(self) == 0.0 or abs(other) == 0.0:
@@ -106,7 +128,7 @@ class Vector:
             return math.acos(round(cos, 4))
 
     def dot(self, other: "Vector") -> float:
-        return np.dot(self._array, other._array)
+        return np.dot(self._ndarray, other._ndarray)
 
     def rotated(self, angle: float) -> "Vector":
         rotation_matrix = np.array(
@@ -115,7 +137,7 @@ class Vector:
                 [math.sin(angle), math.cos(angle)],
             ]
         )
-        return Vector.from_ndarray(np.dot(rotation_matrix, self._array))
+        return Vector.from_ndarray(np.dot(rotation_matrix, self._ndarray))
 
     def normalized(self) -> "Vector":
         magnitude = self.magnitude

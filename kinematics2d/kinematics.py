@@ -105,6 +105,10 @@ class Kinematics:
             self.rotation + other.rotation,
         )
 
+    def __iadd__(self, other: "Kinematics") -> "Kinematics":
+        return self + other
+
+
     def __sub__(self, other: "Kinematics") -> "Kinematics":
         """Calculate the transformation of self to the coordinate frame of other."""
         return Kinematics(
@@ -113,6 +117,9 @@ class Kinematics:
             (self.velocity - other.velocity).rotated(-other.orientation),
             self.rotation - other.rotation,
         )
+
+    def __isub__(self, other: "Kinematics") -> "Kinematics":
+        return self - other
 
     def updated(self, delta_time: float) -> "Kinematics":
         delta_orientation = self.rotation * delta_time
